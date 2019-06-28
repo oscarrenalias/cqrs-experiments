@@ -1,0 +1,64 @@
+version: '3'
+
+networks:
+  app:
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - app
+    ports:
+      - 8000:8000
+    volumes:
+      # project source code
+      - ..:/workspace
+      # git credentials
+      - ~/.gitconfig:/root/.gitconfig
+    command: sleep infinity
+  
+  zookeeper:
+    image: 'bitnami/zookeeper:3'
+    ports:
+      - '2181:2181'
+    volumes:
+      - 'zookeeper_data:/bitnami'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - app
+      
+  kafka:
+    image: 'bitnami/kafka:2'
+    ports:
+      - '9092:9092'
+    volumes:
+      - 'kafka_data:/bitnami'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    networks:
+      - app
+    
+  cockroachdb:
+    image: cockroachdb/cockroach:latest
+    volumes:
+      - cockroachdb
+    networks:
+      - app
+    ports:
+      - '26257:26257'
+      - '8080:8080'
+    command: start --insecure
+
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
+  cockroachdb:
+    driver: local

@@ -1,0 +1,22 @@
+{
+    "name": "dd-node",
+    "version": "1.0.0",
+    "description": "DD on Node.js",
+    "author": "First Last <first.last@example.com>",
+    "main": "server.js",
+    "private": true,
+    "scripts": {
+      "start": "node server.js"
+    },
+    "nodemonConfig": {
+      "ignore": ["node_modules/*", ".devcontainer/*"],
+      "delay": "1000"
+    },
+    "dependencies": {
+      "fastify": "^2.5.0",
+      "kafkajs": "^1.9.0",
+      "sequelize": "^5.8.12",
+      "sequelize-cockroachdb": "^1.0.3",
+      "nodemon": "1.19.1"
+    }
+  }

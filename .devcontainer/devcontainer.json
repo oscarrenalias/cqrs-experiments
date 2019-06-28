@@ -1,0 +1,17 @@
+{
+	
+	"name": "Node.js + Kafka",
+
+	"dockerComposeFile": "docker-compose.yml",
+
+	"service": "app",
+
+	"shutdownAction": "stopCompose",	
+
+	// The optional 'workspaceFolder' property is the path VS Code should open by default when
+	// connected. This is typically a volume mount in .devcontainer/docker-compose.yml
+	"workspaceFolder": "/workspace",
+
+	// Add the IDs of any extensions you want installed in the array below.
+	"extensions": []
+}
